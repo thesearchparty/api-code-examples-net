@@ -1,0 +1,95 @@
+﻿@model CSharp.Models.SkillsModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Candidate Publication Add / Edit";
+}
+
+
+<div class="page-header">
+    <h1>Candidate Skill Add / Delete</h1>
+</div>
+
+<p>
+    The following is an example of how to add or delete Candidate Skill records
+</p>
+
+
+
+
+@using (Html.BeginForm("skillsAdd", "candidates", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    
+    <fieldset>
+        <legend>Add/Edit Record</legend>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Skill.CandidateId, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Skill.CandidateId, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Skill.SkillName, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Skill.SkillName, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Skill.Years, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+
+                @Html.TextBoxFor(m => m.Skill.Years, new { @class = "form-control" })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Skill.LevelId, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Skill.LevelId, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3  col-sm-10">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </div>
+    </fieldset>
+    
+}
+
+@using (Html.BeginForm("skillsDelete", "candidates", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <fieldset>
+        <legend>Delete Record</legend>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Skill.CandidateId, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Skill.CandidateId, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Skill.Id, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Skill.Id, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3  col-sm-10">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </div>
+    </fieldset>
+}
+@if (!string.IsNullOrEmpty(Model.ResponseCode))
+{ 
+    <h5>HTTP Response: @Model.ResponseCode</h5>
+}
+
+@if (!string.IsNullOrEmpty(Model.RawOutput))
+{
+    <div class="col-md-12">
+        <h4>Raw Response</h4>
+        <pre class="prettyprint">@Model.RawOutput</pre>
+    </div>
+}

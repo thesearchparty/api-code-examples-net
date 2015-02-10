@@ -1,0 +1,37 @@
+﻿@model CSharp.Models.CertificationType
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Candidate Certification Types";
+}
+
+
+<div class="page-header">
+    <h1>Candidate Certification Types</h1>
+</div>
+
+<p>
+    The following is an example of how to load or add Candidate Certification Types
+</p>
+
+@using (Html.BeginForm("AddCertificationType", "candidates", FormMethod.Post, new { @class = "form-horizontal" }))
+{ 
+    <div class="form-group">
+        <label class="col-md-3 control-label">Add a Certification Type</label>
+        <div class="col-md-5">
+            @Html.TextBoxFor(m => m.Title, new { @class = "form-control " })
+        </div>
+        <button type="submit" class="btn btn-default">Add</button>
+
+    </div>
+    
+    
+    
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.RawOutput))
+{
+    <div class="col-md-12">
+        <h4>Raw Response</h4>
+        <pre class="prettyprint">@ViewBag.RawOutput</pre>
+    </div>
+}

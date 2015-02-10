@@ -1,0 +1,79 @@
+﻿@model CSharp.Models.CountriesStatesModel
+@{
+    ViewBag.Title = "List Countries";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h1>Country and State/Region Lists</h1>
+</div>
+<p>
+    The following is a demonstration of the country and state api calls. You must pass in a country id to return a state list. Note that some regions do not have states and will return an empty list
+</p>
+<p>
+    <b>For performance reasons, you should always cache the results of these filter calls such as country and sector. The underlying data changes very rarely.</b>
+</p>
+
+
+@using (Html.BeginForm("findStates", "countriesstates", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+
+    <div class="form-group">
+
+        <label for="CountryDdl" class="col-sm-2 control-label">Select Country</label>
+        <div class="col-sm-10">
+            @Html.DropDownListFor(m => m.CountryId, Model.Countries, "Select Country", new { @class = "form-control" })
+
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+
+            <h4>Raw Response</h4>
+            <pre class="prettyprint">
+                @Model.RawOutput
+            </pre>
+        </div>
+        <div class="col-md-6">
+
+            @if(Model.StateList != null && Model.StateList.Count > 0)
+            {
+
+            <h4>State/Region Results</h4>
+
+
+            <table cellpadding="0" class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Short name</th>
+                        <th>Long name</th>
+                        <tr>
+                </thead>
+                @foreach(var state in Model.StateList)
+                {
+                <tr>
+                    <td>@state.Id</td>
+                    <td>@state.ShortTitle</td>
+                    <td>@state.Title</td>
+                </tr>
+                }
+            </table>
+            }
+            else 
+            {
+                <br />
+                <br />
+                <p>
+                    There are no states against this country
+                </p>
+            }
+        </div>
+    </div>
+  
+}

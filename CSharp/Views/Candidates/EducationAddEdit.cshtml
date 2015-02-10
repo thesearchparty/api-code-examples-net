@@ -1,0 +1,133 @@
+﻿@model CSharp.Models.EducationModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Candidates Education";
+}
+
+
+<div class="page-header">
+    <h1>Candidate Education</h1>
+</div>
+
+<p>
+    The following is an example of how to load/edit/add Candidate Education records
+</p>
+
+
+
+@using (Html.BeginForm("EducationAdd", "candidates", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+
+    <fieldset>
+        <legend>Add/Edit Record</legend>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Education.Id, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Education.Id, new { @class = "form-control" })
+                <span class="help-block">Leave this blank to add a new Education record</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Education.CandidateId, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Education.CandidateId, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Education.EducationTypeId, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+
+                @Html.DropDownListFor(m => m.Education.EducationTypeId, Model.EducationTypes, "Select an Education Type", new { @class = "form-control" })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Education.Institution, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+
+                @Html.TextBoxFor(m => m.Education.Institution, new { @class = "form-control" })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Education.Grade, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+
+                @Html.TextBoxFor(m => m.Education.Grade, new { @class = "form-control" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Education.EducationTitle, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+
+                @Html.TextBoxFor(m => m.Education.EducationTitle, new { @class = "form-control" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Education.City, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+
+                @Html.TextBoxFor(m => m.Education.City, new { @class = "form-control" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Education.StartDate, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+
+                @Html.TextBoxFor(m => m.Education.StartDate, new { @class = "form-control" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Education.EndDate, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+
+                @Html.TextBoxFor(m => m.Education.EndDate, new { @class = "form-control" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Education.AwardType, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+
+                @Html.TextBoxFor(m => m.Education.AwardType, new { @class = "form-control" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Education.CountryId, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+
+                @Html.DropDownListFor(m => m.Education.CountryId, Model.Countries, new { @class = "form-control" })
+
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-3  col-sm-10">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </div>
+    </fieldset>
+
+}
+@if (!string.IsNullOrEmpty(Model.RawOutput))
+{
+    <div class="col-md-12">
+        <h4>Raw Response</h4>
+        <pre class="prettyprint">@Model.RawOutput</pre>
+    </div>
+}

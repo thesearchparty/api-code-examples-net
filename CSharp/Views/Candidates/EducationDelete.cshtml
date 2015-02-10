@@ -1,0 +1,48 @@
+﻿@model CSharp.Models.EducationModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Candidate Publication Add / Edit";
+}
+
+
+<div class="page-header">
+    <h1>Education Delete</h1>
+</div>
+
+<p>
+    The following is an example of how to delete education record
+</p>
+
+
+
+
+@using (Html.BeginForm("EducationDelete", "candidates", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <fieldset>
+        <legend>Delete Record</legend>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Education.Id, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Education.Id, new { @class = "form-control" })
+            </div>
+        </div>
+      
+        <div class="form-group">
+            <div class="col-sm-offset-3  col-sm-10">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </div>
+    </fieldset>
+}
+@if (!string.IsNullOrEmpty(Model.ResponseCode))
+{ 
+    <h5>HTTP Response: @Model.ResponseCode</h5>
+}
+
+@if (!string.IsNullOrEmpty(Model.RawOutput))
+{
+    <div class="col-md-12">
+        <h4>Raw Response</h4>
+        <pre class="prettyprint">@Model.RawOutput</pre>
+    </div>
+}

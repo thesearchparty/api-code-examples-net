@@ -1,0 +1,106 @@
+﻿@model CSharp.Models.CertificationsModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Candidate Publication Add / Edit";
+}
+
+
+<div class="page-header">
+    <h1>Candidate Certification Add / Edit</h1>
+</div>
+
+<p>
+    The following is an example of how to add / edit Candidate certification records
+</p>
+
+
+
+
+@using (Html.BeginForm("certificationsAddEdit", "candidates", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    
+    <fieldset>
+        <legend>Add / Edit Record</legend>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Certification.Id, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Certification.Id, new { @class = "form-control" })
+                <span class="help-block">Leave this blank to add a new Certificate record</span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Certification.CandidateId, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Certification.CandidateId, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Certification.CertificationId, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(m => m.Certification.CertificationId, Model.CertificationTypes, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Certification.CertifyingBody, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Certification.CertifyingBody, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Certification.Title, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Certification.Title, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Certification.Grade, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Certification.Grade, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Certification.Limitations, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Certification.Limitations, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Certification.DateGained, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Certification.DateGained, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Certification.DateValidTo, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Certification.DateValidTo, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Certification.AdditionalInformation1, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Certification.AdditionalInformation1, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Certification.AdditionalInformation2, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Certification.AdditionalInformation2, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-3  col-sm-10">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </div>
+    </fieldset>
+    
+}
+@if (!string.IsNullOrEmpty(Model.RawOutput))
+{
+    <div class="col-md-12">
+        <h4>Raw Response</h4>
+        <pre class="prettyprint">@Model.RawOutput</pre>
+    </div>
+}

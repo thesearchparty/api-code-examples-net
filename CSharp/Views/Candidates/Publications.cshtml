@@ -1,0 +1,34 @@
+﻿@model CSharp.Models.PublicationModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Candidate Employment";
+}
+
+
+<div class="page-header">
+    <h1>Candidate Publications</h1>
+</div>
+
+<p>
+    The following is an example of how to load/edit/add Candidate Publication records
+</p>
+
+
+@using (Html.BeginForm("Publications", "candidates", FormMethod.Get, new { @class = "form-horizontal" }))
+{ 
+    <div class="form-group">
+        <label class="col-md-3 control-label">Load Candidate</label>
+        <div class="col-md-5">
+            @Html.TextBoxFor(m => m.CandidateId, new { @class = "form-control " })
+        </div>
+        <button type="submit" class="btn btn-default">Load</button>
+       
+    </div>
+}
+@if (!string.IsNullOrEmpty(Model.RawOutput))
+{
+    <div class="col-md-12">
+        <h4>Raw Response</h4>
+        <pre class="prettyprint">@Model.RawOutput</pre>
+    </div>
+}   

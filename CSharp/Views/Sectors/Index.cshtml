@@ -1,0 +1,75 @@
+﻿@model CSharp.Models.SectorsModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "List Sectors";
+}
+
+<div class="page-header">
+    <h1>Sector &amp; Sub-Sector Lists</h1>
+</div>
+<p>
+    The following is a demonstration of the sector and sub-sector api calls. Use these calls to populate selection options for the advanced search facility.
+</p>
+<p>
+    <b>For performance reasons, you should always cache the results of these filter calls such as country and sector. The underlying data changes very rarely.</b>
+</p>
+
+
+
+@using (Html.BeginForm("findSectors", "sectors", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="form-group">
+
+        <label for="inputEmail3" class="col-sm-2 control-label">Select Sector</label>
+        <div class="col-sm-10">
+
+
+            @Html.DropDownListFor(m => m.SectorId, Model.Sectors, "None Selected", new { @class = "form-control" })
+           
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <h4>Raw Response</h4>
+            <pre class="prettyprint">@Model.RawOutput</pre>
+        </div>
+
+        <div class="col-md-6">
+            @if (Model.SubSectors != null && Model.SubSectors.Count > 0)
+            { 
+            
+         
+            <h4>Results </h4>
+
+
+            <table cellpadding="0" class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                    </tr>
+                </thead>
+
+                @foreach(var item in Model.SubSectors)
+                {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                </tr>
+                }
+            </table>
+                
+            }
+
+
+        </div>
+
+    </div>
+}

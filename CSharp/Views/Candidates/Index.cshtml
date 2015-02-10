@@ -1,0 +1,607 @@
+﻿@model CSharp.Models.CandidateModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "View Candidates";
+    var statesURL = Url.Content("~/countriesstates/getStates");
+}
+
+
+
+<div class="page-header">
+    <h1>Candidates</h1>
+</div>
+
+<p>
+    The following is a demonstration of the candidate calls available in the API
+</p>
+
+@using (Html.BeginForm("index", "candidates", FormMethod.Get, new { @class = "form-horizontal" }))
+{ 
+    <div class="form-group">
+        <label class="col-md-3 control-label">Load a Candidate</label>
+        <div class="col-md-5">
+            @Html.TextBoxFor(m => m.Id, new { @class = "form-control " })
+        </div>
+        <button type="submit" class="btn btn-default">Load</button>
+        &nbsp;
+        @if (Model.Id.HasValue)
+        {
+            <a href="/candidates"> Return to Add Candidate</a>
+        }
+    </div>
+}
+
+
+
+@using (Html.BeginForm("AddCandidate", "candidates", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    if (!Model.Id.HasValue)
+    {
+        <blockquote>
+            <p>Or... Add new below</p>
+        </blockquote>
+    }
+    else
+    {
+        @Html.HiddenFor(m => m.Candidate.Id);
+    }
+    
+    <fieldset>
+        <legend>Personal Details</legend>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.CandidateReference, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.CandidateReference, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Candidate.CandidateReference)
+
+            </div>
+        </div>
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.Candidate.TitleId, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+
+
+                @Html.DropDownListFor(m => m.Candidate.TitleId,
+            new SelectListItem[]
+                 {
+                     new SelectListItem {Value="0", Text="Mr"},
+                     new SelectListItem {Value="1", Text="Miss"},
+                     new SelectListItem {Value="2", Text="Ms"},
+                     new SelectListItem {Value="3", Text="Mrs"},
+                     new SelectListItem {Value="4", Text="Dr"},
+                     new SelectListItem {Value="5", Text="Prof"},
+                 }, "Select Title",
+                 new { @class = "form-control" })
+
+            </div>
+        </div>
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.Candidate.Firstname, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.Firstname, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.Candidate.Lastname, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.Lastname, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.Candidate.Middlename, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.Middlename, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.Candidate.KnownAsName, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.KnownAsName, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.Candidate.GenderId, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(m => m.Candidate.GenderId,
+                new SelectListItem[]
+                {
+                    new SelectListItem {Value="0", Text="Male"},
+                    new SelectListItem {Value="1", Text="Female"}
+                }, "Not specified",
+                new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.DateOfBirth, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.DateOfBirth, new { @class = "form-control datepicker" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.Twitter, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.Twitter, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.LinkedIn, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.LinkedIn, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.WebsiteUrl, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.WebsiteUrl, new { @class = "form-control" })
+            </div>
+        </div>
+
+
+    </fieldset>   
+    
+    <fieldset>
+        <legend>Contact Details</legend>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.Email, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.Email, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.AlternateEmail, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.AlternateEmail, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.Mobile, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.Mobile, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.Phone, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.Phone, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.WorkPhone, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.WorkPhone, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.Mobile, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.Mobile, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.Fax, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.Fax, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.OtherPhone, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.OtherPhone, new { @class = "form-control" })
+            </div>
+        </div>
+
+    </fieldset>
+    
+    
+    <fieldset>
+        <legend>Preferences & Availability</legend>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.AvailabilityId, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(m => m.Candidate.AvailabilityId,
+                    new SelectListItem[]
+                    {
+                        new SelectListItem {Value="0", Text="Unkown"},
+                        new SelectListItem {Value="1", Text="Not Available"},
+                        new SelectListItem {Value="2", Text="Available"}
+                    }
+                    , new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.DateAvailableFrom, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.DateAvailableFrom, new { @class = "form-control" })
+                <span class="help-block">If Availability is set to 'Not Available', this will be the date when available</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.NoticePeriod, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.NoticePeriod, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.NoticePeriodTypeId, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(m => m.Candidate.AvailabilityId,
+                    new SelectListItem[]
+                    {
+                        new SelectListItem {Value="0", Text="Days"},
+                        new SelectListItem {Value="1", Text="Weeks"}
+                    }
+                    , new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-md-3 control-label">Employment Type </label>
+            <div class="col-md-6">
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(m => m.Candidate.IsPreferenceFulltime)
+                    Full-Time
+                </label>
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(m => m.Candidate.IsPreferenceParttime)
+                    Part-Time
+                </label>
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(m => m.Candidate.IsPreferenceTemporary)
+                    Temporary
+                </label>
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(m => m.Candidate.IsPreferenceContract)
+                    Contract
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-md-3 control-label">Travel Preference</label>
+            <div class="col-md-6">
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(m => m.Candidate.IsAvailableTravel)
+                    Available Travel
+                </label>
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(m => m.Candidate.IsAvailableRelocate)
+                    Available Relocate
+                </label>
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(m => m.Candidate.HasOwnTransport)
+                    Has Transport
+                </label>
+
+            </div>
+
+        </div>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Salary Expectations</legend>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-md-3 control-label">Payment Range</label>
+            <div class="col-md-6">
+                @Html.DropDownListFor(m => m.Candidate.SalaryTypeId,
+                    new SelectListItem[]
+                    {
+                        new SelectListItem {Value="0", Text="Hourly"},
+                        new SelectListItem {Value="1", Text="Daily"},
+                        new SelectListItem {Value="2", Text="Yearly"}
+                    }
+                    , new { @class = "form-control" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-md-3 control-label">Hourly Range</label>
+            <div class="col-md-6">
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(m => m.Candidate.MinHourlyRate, new { @class = "form-control " })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(m => m.Candidate.MaxHourlyRate, new { @class = "form-control" })
+                </div>
+                <span class="help-block">If Hourly is selected above</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail3" class="col-md-3 control-label">Daily Range</label>
+            <div class="col-md-6">
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(m => m.Candidate.MinDailyRate, new { @class = "form-control " })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(m => m.Candidate.MaxDailyRate, new { @class = "form-control" })
+                </div>
+                <span class="help-block">If Daily is selected above</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-md-3 control-label">Yearly Range</label>
+            <div class="col-md-6">
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(m => m.Candidate.MinYearlyRate, new { @class = "form-control " })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(m => m.Candidate.MaxYearlyRate, new { @class = "form-control" })
+                </div>
+                <span class="help-block">If Yearly is selected above</span>
+            </div>
+        </div>
+
+    </fieldset>
+    
+    <fieldset>
+        <legend>Target Role
+        </legend>
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.PreferredJobTitle, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.PreferredJobTitle, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.PreferredEmployer1, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.PreferredEmployer1, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.PreferredEmployer2, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.PreferredEmployer2, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.PreferredEmployer3, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.PreferredEmployer3, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.PreferredEmployer4, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.PreferredEmployer4, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.PreferredEmployer5, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.PreferredEmployer5, new { @class = "form-control" })
+            </div>
+        </div>
+
+    </fieldset>
+    
+    <fieldset>
+        <legend>Executive Summary
+        </legend>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.ExecutiveSummary, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextAreaFor(m => m.Candidate.ExecutiveSummary, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.MarketplaceSummary, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextAreaFor(m => m.Candidate.MarketplaceSummary, new { @class = "form-control" })
+            </div>
+        </div>
+    </fieldset>
+ 
+    <fieldset>
+        <legend>Quick Notes
+        </legend>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.QuickNotes, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextAreaFor(m => m.Candidate.QuickNotes, new { @class = "form-control" })
+            </div>
+        </div>
+    </fieldset>
+ 
+    <fieldset>
+        <legend>Primary Address
+        </legend>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.PrimaryAddress1, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.PrimaryAddress1, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.PrimaryAddress2, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.PrimaryAddress2, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.PrimarySuburb, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.PrimarySuburb, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.PrimaryPostcode, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.PrimaryPostcode, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.PrimaryCountryId, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(m => m.Candidate.PrimaryCountryId, Model.Countries, new { @class = "form-control", @id = "CountryId", @data_Url = statesURL })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.PrimaryStateId, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(m => m.Candidate.PrimaryStateId, Model.States, new { @class = "form-control", @id = "StateId" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.PrimaryPostcode, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.PrimaryPostcode, new { @class = "form-control" })
+            </div>
+        </div>
+
+    </fieldset>
+    
+    <fieldset>
+        <legend>Secondary Address
+        </legend>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.SecondaryAddress1, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.SecondaryAddress1, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.SecondaryAddress2, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.SecondaryAddress2, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.SecondarySuburb, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.SecondarySuburb, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.SecondaryPostcode, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.SecondaryPostcode, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.SecondaryCountryId, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(m => m.Candidate.SecondaryCountryId, Model.Countries, new { @class = "form-control", @id = "CountryId", @data_Url = statesURL })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.SecondaryStateId, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(m => m.Candidate.SecondaryStateId, Model.States, new { @class = "form-control", @id = "StateId" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.SecondaryPostcode, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.SecondaryPostcode, new { @class = "form-control" })
+            </div>
+        </div>
+
+    </fieldset>
+    <fieldset>
+        <legend>Nationality
+        </legend>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.Nationality, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.Nationality, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.PassportNumber, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.PassportNumber, new { @class = "form-control" })
+            </div>
+        </div>
+    </fieldset>
+       
+    <fieldset>
+        <legend>Visa
+        </legend>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.VisaType, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.VisaType, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.VisaValidUntil, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.VisaValidUntil, new { @class = "form-control datepicker" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.VisaRestrictions, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Candidate.VisaRestrictions, new { @class = "form-control" })
+            </div>
+        </div>
+
+
+
+    </fieldset>
+    
+        <fieldset>
+    <legend>Skills
+    </legend>
+            
+            </fieldset>
+    
+     <div class="form-group">
+            @Html.LabelFor(m => m.Candidate.SkillsString, new { @class = "col-md-3 control-label" })
+         <div class="col-md-6">
+             @Html.TextBoxFor(m => m.Candidate.SkillsString, new { @class = "form-control" })
+         </div>
+     </div>
+    
+    <div class="form-group">
+        <div class="col-sm-offset-3  col-sm-10">
+            <button type="submit" class="btn btn-default">Submit</button>
+            @Html.HiddenFor(m => m.IsError)
+        </div>
+    </div>
+}
+
+<div class="col-md-6">
+    <h4>Raw Response</h4>
+    <pre class="prettyprint">@Model.RawOutput</pre>
+</div>
+
+
+

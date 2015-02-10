@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Marketplace";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="page-header">
+    <h1>Candidate Marketplace Publish</h1>
+</div>
+
+<p>
+    The following is an example of how to publish to marketplace
+</p>
+
+@using (Html.BeginForm("publish", "marketplace", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="form-group">
+        <label class="col-md-3 control-label">Publish a Candidate</label>
+        <div class="col-md-5">
+            @Html.TextBox("candidateId", "", new { @class = "form-control " })
+        </div>
+        <button type="submit" class="btn btn-default">Publish</button>
+    </div>
+}
+<blockquote>
+    <p>Or... Add new below</p>
+</blockquote>
+
+@using (Html.BeginForm("delete", "marketplace", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="form-group">
+        <label class="col-md-3 control-label">Unpublish a Candidate</label>
+        <div class="col-md-5">
+            @Html.TextBox("candidateId", "", new { @class = "form-control " })
+        </div>
+        <button type="submit" class="btn btn-default">Unpublish</button>
+    </div>
+}
+
+
+
+@if (!string.IsNullOrEmpty(ViewBag.RawOutput))
+{
+    <div class="col-md-12">
+        <h4>Raw Response</h4>
+        <pre class="prettyprint">@ViewBag.RawOutput</pre>
+    </div>
+}

@@ -1,0 +1,158 @@
+﻿@model CSharp.Models.SearchModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="page-header">
+    <h1>Vacancy simple search</h1>
+</div>
+<p>
+    The following is an example of using the simple vacancy search to retrieve vacancies from the tempurer API. This is a basic string search and will search all content on vacancies. Advanced search is available for more specific criteria.
+</p>
+<p>
+    <b>For performance reasons, you should always cache the results of these filter calls such as country and sector. The underlying data changes very rarely.</b>
+</p>
+<p>
+    All vacancy fields are shown here, however location and pay rates can be overriden with literal information. If those fields have a value present, they should be used instead of actual pay rate range and location values.
+
+</p>
+
+
+@using (Html.BeginForm("simpleSearch", "search", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="form-group">
+
+        <label for="PageTb" class="col-sm-2 control-label">Page Index</label>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(m => m.PageIndex, new { @class = "form-control", @placeholder = "Search Text" })
+            <span class="help-block">Page index begins at '0'</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="QueryTb" class="col-sm-2 control-label">Search Text</label>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(m => m.Query, new { @class = "form-control", @placeholder = "Search Text" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default" name="SubmitBtn">Submit</button>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+
+        <h4>Raw Response</h4>
+        <pre class="prettyprint">
+            @Model.RawOutput
+        </pre>
+    </div>
+    <div class="col-md-6">
+        @if (Model.Vacancies != null && Model.Vacancies.Count > 0)
+        {
+            <h4>Results</h4>
+
+            <table cellpadding="0" class="table">
+                @foreach (var item in Model.Vacancies)
+                {
+                    <tr>
+                        <td>
+                            <label>Id</label></td>
+                        <td>@item.Id</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Title</label></td>
+                        <td>@item.Title</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Summary</label></td>
+                        <td>@item.Summary</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>UserReference</label></td>
+                        <td>@item.UserReference</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>ApplyUrl</label></td>
+                        <td>@item.ApplyURL</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>OwnerProfileImageUrl</label></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>DateCommences</label></td>
+                        <td>@item.DateCommences</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>VacancyType</label></td>
+                        <td>@item.VacancyType</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>PaymentRateType</label>
+                        </td>
+                        <td>@item.PaymentRateType</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>MinRate</label></td>
+                        <td>@item.MinHourlyRate</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>MaxRate</label></td>
+                        <td>@item.MaxHourlyRate</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>IsPayRateVisible</label></td>
+                        <td>@item.IsPayRateVisible</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Location</label></td>
+                        <td>@item.LocationCountry</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>LocationCountryId</label></td>
+                        <td>@item.LocationCountryId</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>LocationStateId</label></td>
+                        <td>@item.LocationStateId</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>LocationSuburb</label></td>
+                        <td>@item.LocationCity</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>DisplayRateOverride</label></td>
+                        <td>@item.DisplayRateOverride</td>
+                    </tr>
+                    <tr class="active">
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+            </table>
+        }
+
+    </div>
+</div>

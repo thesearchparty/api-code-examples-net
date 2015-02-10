@@ -1,0 +1,82 @@
+﻿@model CSharp.Models.PublicationModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Candidate Publication Add / Edit";
+}
+
+
+<div class="page-header">
+    <h1>Candidate Publication Add / Edit</h1>
+</div>
+
+<p>
+    The following is an example of how to add / edit Candidate publication records
+</p>
+
+
+
+
+@using (Html.BeginForm("PublicationsAddEdit", "candidates", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    
+    <fieldset>
+        <legend>Add / Edit Record</legend>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Publication.Id, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Publication.Id, new { @class = "form-control" })
+                <span class="help-block">Leave this blank to add a new Publication record</span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Publication.CandidateId, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Publication.CandidateId, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Publication.Title, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+
+                @Html.TextBoxFor(m => m.Publication.Title, new { @class = "form-control" })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Publication.Type, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Publication.Type, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Publication.PublicationYear, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Publication.PublicationYear, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Publication.Description, new { @class = "col-md-3 control-label" })
+            <div class="col-md-6">
+
+                @Html.TextAreaFor(m => m.Publication.Description, new { @class = "form-control" })
+
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-3  col-sm-10">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </div>
+    </fieldset>
+    
+}
+@if (!string.IsNullOrEmpty(Model.RawOutput))
+{
+    <div class="col-md-12">
+        <h4>Raw Response</h4>
+        <pre class="prettyprint">@Model.RawOutput</pre>
+    </div>
+}

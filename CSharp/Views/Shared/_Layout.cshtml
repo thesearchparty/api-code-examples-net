@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="@Url.Content("~/css/bootstrap.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/css/main.css")">
+    <link rel="stylesheet" href="@Url.Content("~/css/bootstrap-theme.min.css")">
+    <style>
+        body {
+            padding-top: 50px;
+            padding-bottom: 20px;
+        }
+    </style>
+    <body>
+        <div id="wrap">
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a href="/">
+                            <img src="@Url.Content("~/img/searchparty-logo-header.png")" style="margin-top: 8px" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3">
+                        <div class="bs-sidebar affix-top">
+                            <ul class="nav bs-sidenav">
+                                <li>
+                                    <a href="@Url.Content("~/countriesstates")">List Countries & States</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("~/countriesstates/FindLocality")">Find a locality</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("~/Sectors")">List Sectors</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("~/Search")">Simple Search</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("~/Search/Advanced")">Advanced Search</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("~/Candidates")">Candidates</a>
+                                    <ul>
+                                        <li><a href="@Url.Content("~/Candidates/skills")">Skills</a></li>
+                                        <li>
+                                            <ul>
+                                                <li><a href="@Url.Content("~/Candidates/skillsAdd")">Add / Delete</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li><a href="@Url.Content("~/Candidates/Education")">Education</a></li>
+                                        <li>
+                                            <ul>
+                                                <li><a href="@Url.Content("~/Candidates/EducationAddEdit")">Add / Edit</a></li>
+                                                <li><a href="@Url.Content("~/Candidates/Educationdelete")">Delete</a></li>
+                                                <li><a href="@Url.Content("~/Candidates/EducationTypes")">Education Types</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li><a href="@Url.Content("~/Candidates/Employment")">Employment</a></li>
+                                        <li>
+                                            <ul>
+                                                <li><a href="@Url.Content("~/Candidates/EmploymentAddEdit")">Add / Edit</a></li>
+                                                <li><a href="@Url.Content("~/Candidates/EmploymentDelete")">Delete</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li><a href="@Url.Content("~/Candidates/Publications")">Publications</a></li>
+                                        <li>
+                                            <ul>
+                                                <li><a href="@Url.Content("~/Candidates/PublicationsAddEdit")">Add / Edit</a></li>
+                                                <li><a href="@Url.Content("~/Candidates/PublicationsDelete")">Delete</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+                                    <ul>
+                                        <li><a href="@Url.Content("~/Candidates/Certifications")">Certifications</a></li>
+                                        <li>
+                                            <ul>
+                                                <li><a href="@Url.Content("~/Candidates/CertificationsAddEdit")">Add / Edit</a></li>
+                                                <li><a href="@Url.Content("~/Candidates/CertificationsDelete")">Delete</a></li>
+                                                <li><a href="@Url.Content("~/Candidates/CertificationTypes")">Certification Types</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a href='@Url.Content("~/marketplace")'>Marketplace</a></li>
+                                <li>
+                                    <ul>
+                                        <li><a href='@Url.Content("~/marketplace")'>Publish / Unpublish</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9">@RenderBody()</div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="bs-footer" role="contentinfo" style="clear: both" id="footer">
+            <div class="container">
+                <div class="row">
+                    <p>&copy; The Search Party 2013</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- /container -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script src="@Url.Content("~/js/bootstrap.min.js")"></script>
+        <script src="@Url.Content("~/js/bootstrap-datepicker.js")"></script>
+        <script src="@Url.Content("~/js/main.js")"></script>
+
+    </body>
+</html>

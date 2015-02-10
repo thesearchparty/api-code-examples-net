@@ -1,0 +1,254 @@
+﻿@model CSharp.Models.SearchModel
+@{
+    ViewBag.Title = "AdvancedSearch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var statesURL = Url.Content("~/countriesstates/getStates");
+}
+
+<div class="page-header">
+    <h1>Vacancy advanced search</h1>
+</div>
+<p>
+    The following is an example of using the advanced vacancy search to retrieve vacancies from the tempurer API. For locality radius search, you can use either a locality id returned from the locality best match call or you can use the region criteria to have the locality selected on the fly.
+</p>
+<p>
+    <b>For performance reasons, you should always cache the results of these filter calls such as country and sector. The underlying data changes very rarely.</b>
+</p>
+<p>
+    All vacancy fields are shown here, however location and pay rates can be overriden with literal information. If those fields have a value present, they should be used instead of actual pay rate range and location values.
+</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>Filter</h4>
+
+        @using (Html.BeginForm("advancedSearch", "search", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <div class="form-group">
+                <label for="PageTb" class="col-sm-4 control-label">Page</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.PageIndex, new { @class = "form-control" })
+                    <span class="help-block">Page index begins at '0'</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="SalaryTypeDdl" class="col-sm-4 control-label">Salary Type</label>
+                <div class="col-sm-6">
+
+                    @Html.DropDownListFor(m => m.SalaryTypeId, Model.SalaryTypeList, new { @class = "form-control" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="SalaryMinTb" class="col-sm-4 control-label">Salary Min</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.SalaryMin, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="SalaryMaxTb" class="col-sm-4 control-label">Salary Max</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.SalaryMax, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="StartDateFromTb" class="col-sm-4 control-label">Start Date From</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.StartDateFrom, new { @class = "form-control datepicker" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="StartDateToTb" class="col-sm-4 control-label">Start Date To</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.StartDateTo, new { @class = "form-control datepicker" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="EndDateFromTb" class="col-sm-4 control-label">End Date From</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.EndDateFrom, new { @class = "form-control datepicker" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="EndDateToTb" class="col-sm-4 control-label">End Date To</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.EndDateTo, new { @class = "form-control datepicker" })
+                </div>
+            </div>
+            <div class="form-group">
+
+                <label for="SectorDdl" class="col-sm-4 control-label">Select Sector</label>
+                <div class="col-sm-6">
+                    @Html.DropDownListFor(m => m.SectorId, Model.Sectors, new { @class = "form-control" })
+                </div>
+
+
+                <label for="SubSectorDdl" class="col-sm-4 control-label">Select Sub-Sector</label>
+                <div class="col-sm-6">
+                    @Html.DropDownListFor(m => m.SubSectorId, Model.SubSectors, new { @class = "form-control" })
+                    <select id="SubSectorDdl" name="SubSectorDdl" class="form-control">
+                        <option value="">None selected</option>
+
+                    </select>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label for="LocationRadiusTb" class="col-sm-4 control-label">Radius (km)</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.LocationRadius, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <h5>Region by locality id</h5>
+                <label for="LocalityIdTb" class="col-sm-4 control-label">Locality ID</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.LocalityId, new { @class = "form-control" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <h5>Or by locality criteria (will find best match)</h5>
+                <label for="CountryDdl" class="col-sm-4 control-label">Select Country</label>
+                <div class="col-sm-6">
+
+                    @Html.DropDownListFor(m => m.CountryId, Model.Countries, "Select Country", new { @class = "form-control", @data_Url = statesURL })
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="StateDdl" class="col-sm-4 control-label">Select State</label>
+                <div class="col-sm-6">
+                    @Html.DropDownListFor(m => m.StateId, Model.States, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="SuburbTb" class="col-sm-4 control-label">Suburb</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.Suburb, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="PostcodeTb" class="col-sm-4 control-label">Postcode</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.Postcode, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label"></label>
+                <div class="col-sm-6">
+                    <button type="submit" class="btn btn-default" name="SubmitBtn">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-6">
+        <h4>Raw Response</h4>
+        <pre class="prettyprint">@Model.RawOutput</pre>
+
+        @if (Model.Vacancies != null && Model.Vacancies.Count > 0)
+        {
+            <h4>Results</h4>
+
+            <table cellpadding="0" class="table">
+                @foreach (var item in Model.Vacancies)
+                {
+                    <tr>
+                        <td>
+                            <label>Id</label></td>
+                        <td>@item.Id</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Title</label></td>
+                        <td>@item.Title</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Summary</label></td>
+                        <td>@item.Summary</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>UserReference</label></td>
+                        <td>@item.UserReference</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>ApplyUrl</label></td>
+                        <td>@item.ApplyURL</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>OwnerProfileImageUrl</label></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>DateCommences</label></td>
+                        <td>@item.DateCommences</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>VacancyType</label></td>
+                        <td>@item.VacancyType</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>PaymentRateType</label>
+                        </td>
+                        <td>@item.PaymentRateType</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>MinRate</label></td>
+                        <td>@item.MinHourlyRate</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>MaxRate</label></td>
+                        <td>@item.MaxHourlyRate</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>IsPayRateVisible</label></td>
+                        <td>@item.IsPayRateVisible</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Location</label></td>
+                        <td>@item.LocationCountry</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>LocationCountryId</label></td>
+                        <td>@item.LocationCountryId</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>LocationStateId</label></td>
+                        <td>@item.LocationStateId</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>LocationSuburb</label></td>
+                        <td>@item.LocationCity</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>DisplayRateOverride</label></td>
+                        <td>@item.DisplayRateOverride</td>
+                    </tr>
+                    <tr class="active">
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+</div>
