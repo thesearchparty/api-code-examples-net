@@ -13,8 +13,6 @@ namespace CSharp.API
 {
     public class SearchPartyAPI
     {
-        private static string _clientName = ConfigurationManager.AppSettings["apiKey"];
-        private static string _clientSecret = ConfigurationManager.AppSettings["apiSecret"];
 
         // Production api and authorisation urls
         private static string _baseApiUrl = ConfigurationManager.AppSettings["apiUrl"];
@@ -313,6 +311,10 @@ namespace CSharp.API
         /// </summary>
         private static SearchPartyWebResponse CallApiServiceUsingHttp(IEnumerable<string> scopes, string serviceUrl, string data = "", string method = "GET")
         {
+            string _clientName = HttpContext.Current.Session["apiKey"] != null ? HttpContext.Current.Session["apiKey"].ToString() : ConfigurationManager.AppSettings["apiKey"];
+            string _clientSecret = HttpContext.Current.Session["apiSecret"] != null ? HttpContext.Current.Session["apiSecret"].ToString() : ConfigurationManager.AppSettings["apiSecret"];
+
+
             SearchPartyWebResponse apiResponse = new SearchPartyWebResponse();
             // ------------------------------------------------
             // STEP 1: GetClientAccessToken

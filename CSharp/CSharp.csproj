@@ -113,6 +113,7 @@
   <ItemGroup>
     <Compile Include="API\jsonHelper.cs" />
     <Compile Include="API\SearchPartyAPI.cs" />
+    <Compile Include="Controllers\ConfigController.cs" />
     <Compile Include="Controllers\MarketplaceController.cs" />
     <Compile Include="Controllers\CandidatesController.cs" />
     <Compile Include="Controllers\CountriesStatesController.cs" />
@@ -219,6 +220,8 @@
     <Content Include="Views\Candidates\EmploymentDelete.cshtml" />
     <Content Include="Views\Candidates\PublicationsDelete.cshtml" />
     <Content Include="Views\Marketplace\Index.cshtml" />
+    <Content Include="Views\Config\Index.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

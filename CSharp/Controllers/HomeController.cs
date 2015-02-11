@@ -19,5 +19,10 @@ namespace CSharp.Controllers
             return View();
         }
 
+        public ActionResult Error()
+        {
+            return View();
+        }
+
     }
 }
