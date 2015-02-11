@@ -30,5 +30,12 @@ namespace CSharp.Controllers
 
             return View();
         }
+
+        [HttpPost]
+        public ActionResult ClearConfig()
+        {
+            Session.Clear();
+            return View("index");
+        }
     }
 }
