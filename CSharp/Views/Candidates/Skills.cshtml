@@ -15,15 +15,19 @@
 
 
 @using (Html.BeginForm("skills", "candidates", FormMethod.Get, new { @class = "form-horizontal" }))
-{ 
+{
     <div class="form-group">
         <label class="col-md-3 control-label">Load Candidate</label>
         <div class="col-md-5">
             @Html.TextBoxFor(m => m.CandidateId, new { @class = "form-control " })
         </div>
         <button type="submit" class="btn btn-default">Load</button>
-       
+
     </div>
+}
+@if (!string.IsNullOrEmpty(Model.ResponseCode))
+{
+    <h5>HTTP Response: @Model.ResponseCode</h5>
 }
 @if (!string.IsNullOrEmpty(Model.RawOutput))
 {

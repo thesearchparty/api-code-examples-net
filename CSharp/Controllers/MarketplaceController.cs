@@ -15,7 +15,9 @@ namespace CSharp.Controllers
 
         public ActionResult Index(Guid? id)
         {
-            return View();
+
+            var model = new MarketplaceModel();
+            return View(model);
         }
 
 
@@ -25,10 +27,36 @@ namespace CSharp.Controllers
 
             Guid id_guid;
 
-            if (Guid.TryParse(candidateId, out id_guid))
-                ViewBag.RawOutput = JsonHelper.FormatJson(SearchPartyAPI.PublishCandidateMarketplace(id_guid).JsonString);
+            var model = new MarketplaceModel();
 
-            return Content(ViewBag.RawOutput);
+            if (Guid.TryParse(candidateId, out id_guid))
+            {
+                var returnResult = SearchPartyAPI.PublishCandidateMarketplace(id_guid);
+
+                model.RawOutput = JsonHelper.FormatJson(returnResult.JsonString);
+                model.ResponseCode = returnResult.StatusCode.ToString();
+                
+            }
+
+            return View("index", model);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(string candidateId)
+        {
+
+            Guid id_guid;
+
+            var model = new MarketplaceModel();
+
+            if (Guid.TryParse(candidateId, out id_guid))
+            {
+                var returnResult = SearchPartyAPI.UnPublishCandidateMarketplace(id_guid);
+                model.RawOutput = JsonHelper.FormatJson(returnResult.JsonString);
+                model.ResponseCode = returnResult.StatusCode.ToString();
+            }
+
+            return View("index", model);
         }
     }
 

@@ -296,14 +296,13 @@ namespace CSharp.API
             return CallApiServiceUsingHttp(scopes, serviceUrl, "", "POST");
         }
 
-        //public static SearchPartyWebResponse PublishCandidateMarketplace(Guid id)
-        //{
-        //    var scopes = new List<string>() { "basic" };
-        //    var serviceUrl = String.Format("{0}://{1}/1.0/marketplace/" + id.ToString(), _protocolAPI, _baseApiUrl);
+        public static SearchPartyWebResponse UnPublishCandidateMarketplace(Guid id)
+        {
+            var scopes = new List<string>() { "basic" };
+            var serviceUrl = String.Format("{0}://{1}/1.0/marketplace/" + id.ToString(), _protocolAPI, _baseApiUrl);
 
-        //    return CallApiServiceUsingHttp(scopes, serviceUrl);
-        //}
-
+            return CallApiServiceUsingHttp(scopes, serviceUrl, method: "DELETE");
+        }
 
 
         /// <summary>

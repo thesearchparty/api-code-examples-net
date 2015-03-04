@@ -45,7 +45,9 @@ namespace CSharp.Controllers
 
             if (CandidateId.HasValue)
             {
-                model.RawOutput = JsonHelper.FormatJson(SearchPartyAPI.GetSkills(CandidateId.Value).JsonString);
+                var apiResponse = SearchPartyAPI.GetSkills(CandidateId.Value);
+                model.RawOutput = JsonHelper.FormatJson(apiResponse.JsonString);
+                model.ResponseCode = apiResponse.StatusCode.HasValue ? apiResponse.StatusCode.Value.ToString() : "";
             }
 
             return View("skills", model);

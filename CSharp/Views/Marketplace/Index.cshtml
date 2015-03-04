@@ -1,9 +1,10 @@
-﻿@{
+﻿
+@model CSharp.Models.MarketplaceModel
+
+@{
     ViewBag.Title = "Marketplace";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
 
 
 <div class="page-header">
@@ -39,12 +40,15 @@
     </div>
 }
 
+@if (!string.IsNullOrEmpty(Model.ResponseCode))
+{
+    <h5>HTTP Response: @Model.ResponseCode</h5>
+}
 
-
-@if (!string.IsNullOrEmpty(ViewBag.RawOutput))
+@if (!string.IsNullOrEmpty(Model.RawOutput))
 {
     <div class="col-md-12">
         <h4>Raw Response</h4>
-        <pre class="prettyprint">@ViewBag.RawOutput</pre>
+        <pre class="prettyprint">@Model.RawOutput</pre>
     </div>
 }

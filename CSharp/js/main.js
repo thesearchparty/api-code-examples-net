@@ -26,7 +26,8 @@ library.json = {
 $(function(){
 
          $('.datepicker').datepicker({
-            format: 'dd/mm/yyyy'
+             format: 'dd/mm/yyyy',
+             autoclose: true
          });
         
          if ($('#IsError').val() == 'true') {
