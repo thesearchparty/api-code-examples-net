@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace CSharp.Controllers
 {
@@ -51,6 +52,18 @@ namespace CSharp.Controllers
             model.Sectors = sectorsList;
 
             return View("index", model);
+        }
+
+        /// <summary>
+        /// Method used by UI to fill sub select list for sector
+        /// </summary>
+        public ActionResult GetSubSector(int parentSectorId)
+        {
+            var jss = new JavaScriptSerializer();
+
+            dynamic data = jss.Deserialize<dynamic>(SearchPartyAPI.ListSectors(parentSectorId).JsonString);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }
